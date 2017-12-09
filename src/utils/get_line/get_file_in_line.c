@@ -10,7 +10,7 @@
 
 static char **rea_and_add(char **str, char *buffer, int size)
 {
-	char **new_str = malloc(sizeof(char *) * size);
+	char **new_str = malloc(sizeof(char *) * (size + 1));
 
 	if (new_str == NULL)
 		return (NULL);
@@ -23,19 +23,20 @@ static char **rea_and_add(char **str, char *buffer, int size)
 	return (new_str);
 }
 
-char **get_file_in_line(int fd)
+char **get_file_in_line(int fd, char separator)
 {
 	char **str = NULL;
 	char *buffer;
 	int i = 1;
 
-	buffer = get_next_line(fd);
+	buffer = get_next_line(fd, separator);
 	while (buffer != NULL) {
 		str = rea_and_add(str, buffer, i);
 		if (!str)
 			return (NULL);
-		buffer = get_next_line(fd);
+		buffer = get_next_line(fd, separator);
 		i++;
 	}
+	str = rea_and_add(str, NULL, i);
 	return (str);
 }

@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-char **get_n_next_line(int fd, int n)
+char **get_n_next_line(int fd, char separator, int n)
 {
 	char **to_return = malloc(sizeof(char *) * n);
 
 	if (to_return == NULL)
 		return (NULL);
 	for (int i = 0; i < n; i++) {
-		to_return[i] = get_next_line(fd);
+		to_return[i] = get_next_line(fd, separator);
 		if (to_return[i] == NULL)
 			return (NULL);
 	}

@@ -16,4 +16,6 @@ struct env_var
         char *value;
 };
 
+char **get_env();
+
 #endif

@@ -6,38 +6,32 @@
 */
 
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "get_next_line.h"
 #include "my_printf.h"
 
-static void exec_env()
+static int open_env()
 {
-	char *argv[] = {"/usr/bin/env"};
-	char *env_arg[] = {NULL};
+	int pid = getpid();
+	char *path = NULL;
+	int fd;
 
-	execve("/usr/bin/env", argv, env_arg);
+	my_sprintf(&path, "/proc/%d/environ", pid);
+	fd = open(path, O_RDONLY);
+	free(path);
+	return (fd);
 }
 
 char **get_env()
 {
-	int fd[2];
-	int pid;
 	char **res = NULL;
+	int fd = open_env();
 
-	pipe(fd);
-	pid = fork();
-	switch() {
-	case -1:
-		my_dprintf(2, "Error getting the env variables.\n");
-		exit(84);
-		break;
-	case 0:
-		close(fd[1]);
-		dup2(fd[0], 0);
-		exec_env();
-		break;
-	default:
-		close(fd[0]);
-		res = get_line_in_file(fd[1]);
-	}
-	return (res);
+	if (fd < 0)
+		return (NULL);
+	res = get_file_in_line(fd, '\0');
+       	return (res);
 }

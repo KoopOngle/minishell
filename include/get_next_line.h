@@ -12,8 +12,8 @@
 	#define READ_SIZE 32000
 #endif /* !READ_SIZE */
 
-char *get_next_line(int fd);
-char **get_file_in_line(int fd);
-char **get_n_next_line(int fd, int n);
+char *get_next_line(int fd, char separator);
+char **get_file_in_line(int fd, char separator);
+char **get_n_next_line(int fd, char separator, int n);
 
 #endif /* GET_NEXT_LINE_H_ */

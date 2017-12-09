@@ -64,20 +64,20 @@ static char *my_rea_ncat(char *dest, char *src, int n)
 	return (res);
 }
 
-static int get_pos_return(char *str)
+static int get_pos_return(char *str, char separator)
 {
 	int i = 0;
 	int pos = -1;
 
 	while (i < READ_SIZE && pos == -1) {
-		if (str[i] == '\n')
+		if (str[i] == separator)
 			pos = i;
 		i++;
 	}
 	return (pos);
 }
 
-char *get_next_line(int fd)
+char *get_next_line(int fd, char separator)
 {
 	static char stocked[READ_SIZE];
 	char *to_return = NULL;
@@ -90,7 +90,7 @@ char *get_next_line(int fd)
 			cond = read(fd, stocked, READ_SIZE);
 		if (cond <= 0 && to_return == NULL)
 			return (NULL);
-		pos = get_pos_return(stocked);
+		pos = get_pos_return(stocked, separator);
 		bool = (pos >= 0 || cond == 0) ? 0 : bool;
 		pos = (pos < 0 || cond == 0) ? READ_SIZE : pos;
 		to_return = my_rea_ncat(to_return, stocked, pos);
