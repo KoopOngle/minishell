@@ -8,7 +8,7 @@
 #include "mylist.h"
 #include <stdlib.h>
 
-int my_list_size(linked_list_t *begin)
+int list_size(linked_list_t *begin)
 {
 	linked_list_t *tmp = begin;
 	int i = 0;
