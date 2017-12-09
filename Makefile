@@ -11,20 +11,15 @@ OBJDIR		=	build
 
 SRCS		=	$(shell find $(SRCDIR) -name '*.c')
 
-SRCDIRS		=	$(shell find $(SRCDIR) -type d | sed 's/\/$(SRCDIR)/./g')
-
 OBJS		=	$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 PROJECT		=	mysh
 
-CFLAGS		=	-I./include -L./lib
+CFLAGS		=	-I./include -L./lib -Wall -Wextra
 CFLAGS		+=	$(DEBUG)
 
 all:		buildrepo $(OBJS)
-		@ar rc $(PROJECT) $(OBJS)
-
-lala:
-		@gcc -o my_printf main.c -I./include -lmy
+		@gcc -o $(PROJECT) $(CFLAGS) -lmy
 
 $(OBJDIR)/%.o: 	$(SRCDIR)/%.c
 		@gcc -c $< -o $@ $(CFLAGS)
