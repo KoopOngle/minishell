@@ -11,10 +11,10 @@
 typedef struct list
 {
 	void *data;
-	struct linked_list *next;
+	struct list *next;
 } list_t;
 
-int list_size(linked_list_t *begin);
-int put_in_list(linked_list_t **list, void *data);
+int list_size(list_t *begin);
+int put_in_list(list_t **list, void *data);
 
 #endif

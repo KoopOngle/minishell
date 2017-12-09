@@ -5,12 +5,12 @@
 ** my list size
 */
 
-#include "mylist.h"
 #include <stdlib.h>
+#include "list.h"
 
-int put_in_list(linked_list_t **list, void *data)
+int put_in_list(list_t **list, void *data)
 {
-	linked_list_t *element;
+	list_t *element;
 
 	element = malloc(sizeof(*element));
 	element->data = data;
