@@ -19,23 +19,23 @@ CFLAGS		=	-I./include -L./lib -Wall -Wextra
 CFLAGS		+=	$(DEBUG)
 
 all:		buildrepo $(OBJS)
-		@gcc -o $(PROJECT) $(CFLAGS) -lmy
+		gcc -o $(PROJECT) $(OBJS) $(CFLAGS) -lmy_printf
 
 $(OBJDIR)/%.o: 	$(SRCDIR)/%.c
-		@gcc -c $< -o $@ $(CFLAGS)
+		gcc -c $< -o $@ $(CFLAGS)
 
-tests_run:	all
-		@make -C tests/
+#tests_run:	all
+#		@make -C tests/
 
 buildrepo:
-		@$(call make-repo)
+		$(call make-repo)
 
 clean:
-		@rm -rf $(OBJS)
-		@rm -rf vgcore.*
+		rm -rf $(OBJS)
+		rm -rf vgcore.*
 
 fclean:		clean
-		@rm -rf $(PROJECT)
+		rm -rf $(PROJECT)
 
 re:		fclean all
 
