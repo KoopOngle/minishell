@@ -17,5 +17,6 @@ struct env_var
 };
 
 char **get_env();
+char **to_str_array(list_t *l_env);
 
 #endif /* ENV_H_ */
