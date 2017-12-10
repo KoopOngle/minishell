@@ -18,4 +18,4 @@ struct env_var
 
 char **get_env();
 
-#endif
+#endif /* ENV_H_ */

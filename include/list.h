@@ -8,11 +8,13 @@
 #ifndef LIST_H_
 #define LIST_H_
 
-typedef struct list
+typedef struct list list_t;
+
+struct list
 {
 	void *data;
 	struct list *next;
-} list_t;
+};
 
 int list_size(list_t *begin);
 int put_in_list(list_t **list, void *data);
