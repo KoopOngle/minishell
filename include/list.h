@@ -17,4 +17,4 @@ typedef struct list
 int list_size(list_t *begin);
 int put_in_list(list_t **list, void *data);
 
-#endif
+#endif /* LIST_H_ */

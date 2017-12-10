@@ -15,7 +15,7 @@ OBJS		=	$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 PROJECT		=	mysh
 
-CFLAGS		=	-I./include -L./lib -Wall -Wextra
+CFLAGS		=	-I./include -L./lib
 CFLAGS		+=	$(DEBUG)
 
 all:		buildrepo $(OBJS)
