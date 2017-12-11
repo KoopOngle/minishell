@@ -16,8 +16,9 @@ struct env_var
         char *value;
 };
 
-char **get_env();
 char **to_str_array(list_t *l_env);
 char *get_env_value(list_t *l_env, char *name);
+void set_env(list_t *l_env, char *name, char *value);
+char *cat_env_var(list_t *l_env, char *new_env);
 
 #endif /* ENV_H_ */

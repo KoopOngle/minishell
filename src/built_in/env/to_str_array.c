@@ -29,7 +29,6 @@ char **to_str_array(list_t *l_env)
 		my_sprintf(&tmp_str, "%s=%s", tmp->name, tmp->value);
 		res[i++] = tmp_str;
 		tmp_str = NULL;
-// Peut etre mettre un \n ou \0 a la fin
 		tmp_list = tmp_list->next;
 	}
 	return (res);
