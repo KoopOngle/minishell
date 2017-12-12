@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "my_printf.h"
 #include "string.h"
+#include "parser.h"
 
 static int is_separator(char c)
 {
@@ -77,5 +78,6 @@ char **command_parser(char *command)
 		return (NULL);
 	command = parse_spaces(command);
 	my_printf("COM : %s\n", command);
-	return (NULL);
+	res = my_str_to_word_array(command);
+	return (res);
 }
