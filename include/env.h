@@ -24,5 +24,6 @@ void set_env(list_t *l_env, char *name, char *value);
 char *cat_env_var(list_t *l_env, char *new_env);
 
 int change_directory(char *str);
+void my_exit();
 
 #endif /* ENV_H_ */
