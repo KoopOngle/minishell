@@ -15,7 +15,7 @@ void my_print_err(char *str)
 	perror(str);
 }
 
-void my_exit(char *str, int err_value)
+void my_exit_err(char *str, int err_value)
 {
 	perror(str);
 	exit(err_value);

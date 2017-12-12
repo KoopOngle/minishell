@@ -61,12 +61,11 @@ static char *parse_spaces(char *command)
 	int end;
 	int begin = i;
 	
-	while (command[i]) {
+	while (command[i])
 		if (is_separator(command[i]))
 			handle_separator(&res, command, &i);
 		else
 			handle_normal(&res, command, &i);
-	}
 	return (res);
 }
 
@@ -77,7 +76,6 @@ char **command_parser(char *command)
 	if (command == NULL)
 		return (NULL);
 	command = parse_spaces(command);
-	my_printf("COM : %s\n", command);
 	res = my_str_to_word_array(command);
 	return (res);
 }
