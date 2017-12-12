@@ -14,6 +14,7 @@
 static int get_pos_first_equal(char *str)
 {
 	int i = 0;
+
 	while (str[i] && str[i] != '=')
 		i++;
 	if (str[i] == 0)
