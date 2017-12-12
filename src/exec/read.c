@@ -41,9 +41,12 @@ void read_stdin(char *word, int fd)
 		tmp = get_next_line(0, '\n');
 	}
 	l_tmp = l_str;
-	while (l_tmp) {
-		tmp = l_tmp->data;
+	while (l_str) {
+		tmp = l_str->data;
 		my_dprintf(fd, "%s\n", tmp);
-		l_tmp = l_tmp->next;
+		l_tmp = l_str->next;
+		free(tmp);
+		free(l_str);
+		l_str = l_tmp;
 	}
 }
