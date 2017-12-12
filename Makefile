@@ -11,7 +11,7 @@ OBJDIR		=	build
 
 SRCS		=	$(shell find $(SRCDIR) -name '*.c')
 
-OBJS		=	$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+OBJS		=	$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 PROJECT		=	mysh
 
@@ -32,16 +32,16 @@ buildrepo:
 
 clean:
 		rm -rf $(OBJS)
-		rm -rf vgcore.*
+		rm -f vgcore.*
 
 fclean:		clean
-		rm -rf $(PROJECT)
+		rm -f $(PROJECT)
 
 re:		fclean all
 
 define make-repo
-	for dir in $(dir $(OBJS)); \
-	do \
-		mkdir -p $$dir; \
+	for dir in $(dir $(OBJS)); 	\
+	do 				\
+		mkdir -p $$dir; 	\
 	done
 endef
