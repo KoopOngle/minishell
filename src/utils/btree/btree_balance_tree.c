@@ -22,21 +22,25 @@ static int get_prio(char *str)
 		return (0);
 }
 
+static btree_t *copy_btree(btree_t *tree)
+{
+	btree_t *duptree = btree_create_node(tree->value);
+
+	duptree->left = tree->left;
+	duptree->right = tree->right;
+	return (duptree);
+}
+
 static void balance(btree_t **root)
 {
-	char **valuetemp = NULL;
-	int sep_temp;
+	btree_t *temp_tree;
 
 	if (((*root)->left && (*root)->right) &&
 	    get_prio((*root)->left->value[0]) == 1 &&
 	    get_prio((*root)->right->value[0]) == 0) {
-		valuetemp = (*root)->left->value;
-		sep_temp = (*root)->left->is_separator;
-		(*root)->left->value = (*root)->right->value;
-		(*root)->left->is_separator =
-			(*root)->right->is_separator;
-		(*root)->right->value = valuetemp;
-		(*root)->right->is_separator = sep_temp;
+		temp_tree = (*root)->left;
+		(*root)->left = (*root)->right;
+		(*root)->right = temp_tree;
 	}
 }
 
