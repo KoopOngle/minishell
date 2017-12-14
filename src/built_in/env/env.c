@@ -9,12 +9,12 @@
 #include "env.h"
 #include "my_printf.h"
 
-int env(list_t *l_env)
+void env(list_t *l_env)
 {
 	char **env = to_str_array(l_env);
 	int i = 0;
 
 	while (env[i]) 
 		my_printf("%s\n", env[i++]);
-	return (0);
+	exit(1);
 }

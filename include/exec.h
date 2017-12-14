@@ -18,6 +18,7 @@ void read_stdin(char *word, int fd);
 void command_handler(btree_t *cmd, list_t *l_env);
 void my_exec(char **argv, list_t *l_env);
 
-int then(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+int then_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+int pipe_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
 
 #endif /* EXEC_H_ */
