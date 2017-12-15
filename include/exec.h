@@ -19,7 +19,15 @@ char *get_access(char *cmd, list_t *l_env);
 void command_handler(btree_t *cmd, list_t *l_env);
 void my_exec(char **argv, list_t *l_env);
 
-int then_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
-int pipe_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void then_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void pipe_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void out_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void append_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void in_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
+void stdin_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout);
 
+static const char *EXEC[] = {";", "|", ">", ">>", "<", "<<", NULL};
+static const void (*EXEC_FUNC[])() = {&then_handler, &pipe_handler,
+				      &out_handler, &append_handler,
+				      &in_handler, &stdin_handler};
 #endif /* EXEC_H_ */
