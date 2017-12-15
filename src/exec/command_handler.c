@@ -11,16 +11,33 @@
 #include "exec.h"
 #include "string.h"
 #include "my_printf.h"
-#include "btree.h"
 #include "error.h"
 #include "parser.h"
+#include "list.h"
 
-void command_handler(btree_t *cmd, list_t *l_env)
+void command_handler(list_t *cmd, list_t *l_env)
 {
 	int pid;
 	int pos;
+
+	if (cmd->next == NULL) {
+		pid = fork();
+		switch (pid) {
+		case -1:
+			my_print_err("Error fork");
+			break;
+		case 0:
+			my_exec(((cmd_t *)cmd->data)->value, l_env);
+			break;
+		default:
+			waitpid(pid, NULL, 0);
+		}
+	} else {
+		
+	}
 	
-	if (cmd->is_separator) {
+	
+/*	if (cmd->is_separator) {
 		pos = pos_str_in_array((char **)EXEC, cmd->value[0]);
 		EXEC_FUNC[pos](cmd, l_env, 0, 1);
 	} else {
@@ -35,5 +52,5 @@ void command_handler(btree_t *cmd, list_t *l_env)
 		default:
 			waitpid(pid, NULL, 0);
 		}
-	}
+		}*/
 }

@@ -15,27 +15,36 @@
 #include "btree.h"
 #include "string.h"
 
-static void change_path_cmd(btree_t *btree, list_t *l_env)
+static int is_redirection(cmd_t *cmd)
 {
-	if (btree == NULL)
+	return (!compare(cmd->value[0], ">") || !compare(cmd->value[0], ">>") ||
+		!compare(cmd->value[0], "<") || !compare(cmd->value[0], "<<"));
+}
+
+static void change_path_cmd(list_t *list, list_t *l_env)
+{
+	cmd_t *cmd = NULL;
+	
+	if (list == NULL)
 		return;
-	if (btree->is_separator) {
-		if (btree->value[0][0] == '|' || btree->value[0][0] == ';') {
-			change_path_cmd(btree->left, l_env);
-			change_path_cmd(btree->right, l_env);
-		} else 
-			change_path_cmd(btree->left, l_env);
-	} else {
-		btree->value[0] = get_access(btree->value[0], l_env);
-	}
+	cmd = list->data;
+	if (cmd->is_separator) {
+		if (list->next == NULL)
+			return;
+		if (is_redirection(cmd))
+			change_path_cmd(list->next->next, l_env);
+		else
+			change_path_cmd(list->next, l_env);
+	} else
+		cmd->value[0] = get_access(cmd->value[0], l_env);
 }
 
 void core_sh(list_t *l_env)
 {
 	char *command = NULL;
-	list_t *tmp = l_env;
+	list_t *tmp = NULL;
 	char **cmd = NULL;
-	btree_t *btree = NULL;
+	list_t *l_cmd = NULL;
 
 	while (1) {
 		my_printf("$>");
@@ -47,10 +56,17 @@ void core_sh(list_t *l_env)
 			continue;
 		}
 		cmd = command_parser(command);
-		btree = create_btree(cmd);
-		change_path_cmd(btree, l_env);
-		command_handler(btree, l_env);
+		l_cmd = create_cmd_list(cmd);
+		change_path_cmd(l_cmd, l_env);
+		tmp = l_cmd;
+		cmd_t *lala = NULL;
+		while (tmp) {
+			lala = tmp->data;
+			my_printf("%s\n", lala->value[0]);
+			tmp = tmp->next;
+		}
+		command_handler(l_cmd, l_env);
 		free(cmd); // free dedans
-		free(btree);
+		free(l_cmd);
 	}
 }
