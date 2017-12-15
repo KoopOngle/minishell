@@ -15,6 +15,7 @@
 #include "string.h"
 #include "env.h"
 #include "parser.h"
+#include "error.h"
 
 static char *handle_realpath(char *cmd)
 {
@@ -22,14 +23,12 @@ static char *handle_realpath(char *cmd)
 
 	rval = access(cmd, F_OK);
 	if (rval == -1) {
-		my_printf("cmd : %s :", cmd);
-		perror("");
+		my_print_err(cmd);
 		return (NULL);
 	}
 	rval = access(cmd, X_OK);
 	if (rval == -1) {
-		my_printf("cmd : %s :", cmd);
-		perror("");
+		my_print_err(cmd);
 		return (NULL);
 	}
 	return(cmd);
@@ -88,5 +87,7 @@ char *get_access(char *cmd, list_t *l_env)
 		if (result != NULL)
 			break;
 	}
+	if (result == NULL)
+		my_dprintf(2, "%s: No such file or directory", cmd);
 	return ((result != NULL) ? handle_realpath(result) : NULL);
 }
