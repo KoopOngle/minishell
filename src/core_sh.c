@@ -38,8 +38,10 @@ void core_sh(list_t *l_env)
 	btree_t *btree = NULL;
 
 	while (1) {
-		my_printf("enter your command$>");
+		my_printf("$>");
 		command = get_next_line(0, '\n');
+		if (command == 0)
+			break;
 		if (!compare(command, "")) {
 			free(command);
 			continue;
