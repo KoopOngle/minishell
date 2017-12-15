@@ -9,18 +9,18 @@
 #include <stdlib.h>
 #include "my_printf.h"
 #include "error.h"
+#include "env.h"
 
-int change_directory(char *str)
+void change_directory(char *str)
 {
 	char *str_err = NULL;
 	int res;
-
 
 	if (chdir(str) == -1) {
 		my_sprintf(&str_err, "cd : %s", str);
 		my_print_err(str_err);
 		free(str_err);
-		return (1);
+		exit(1);
 	}
-	return (0);
+	my_exit();
 }

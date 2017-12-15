@@ -19,7 +19,7 @@ int write_file(char *file_name)
 	int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	char *err = NULL;
 	
-	fd = open(file_name, O_CREAT | O_WRONLY, mode);
+	fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, mode);
 	if (fd == -1) {
 		my_sprintf(&err, "Error: %s", file_name);
 		my_print_err(err);
