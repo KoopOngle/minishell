@@ -23,7 +23,8 @@ static char *handle_realpath(char *cmd)
 
 	rval = access(cmd, F_OK);
 	if (rval == -1) {
-		my_print_err(cmd);
+		my_dprintf(2, "%s: command not found\n", cmd);
+//		my_print_err(cmd);
 		return (NULL);
 	}
 	rval = access(cmd, X_OK);
@@ -88,6 +89,6 @@ char *get_access(char *cmd, list_t *l_env)
 			break;
 	}
 	if (result == NULL)
-		my_dprintf(2, "%s: No such file or directory", cmd);
+		my_dprintf(2, "%s: command not found\n", cmd);
 	return ((result != NULL) ? handle_realpath(result) : NULL);
 }
