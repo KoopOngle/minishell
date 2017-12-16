@@ -9,7 +9,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "btree.h"
 #include "my_printf.h"
 #include "list.h"
 #include "exec.h"
@@ -18,46 +17,34 @@
 #include "get_next_line.h"
 #include "parser.h"
 
-void pipe_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout)
+void pipe_handler(list_t *list, list_t **l_env, int my_stdin, int my_stdout)
 {
-	int pid_left = -1;
-	int pid_right = -1;
+	int pid;
 	int fd[2];
-	int nb_wait = 0;
-	int pos;
-	
-	pipe(fd);
-	if (btree->left->is_separator) {
-		pos = pos_str_in_array((char **)EXEC, btree->left->value[0]);
-		EXEC_FUNC[pos](btree->left, l_env, my_stdin, fd[1]);
-	} else {
-		nb_wait++;
-		pid_left = fork();
-		if (pid_left == -1)
-			my_print_err("Error pipe fork");
-		else if (pid_left == 0) {
-			close(fd[0]);
-			dup2(my_stdin, 0);
-			dup2(fd[1], 1);
-			close(fd[1]);
-			my_exec(btree->left->value, l_env);
-		}
+	cmd_t *cmd_tmp = NULL;
+
+	cmd_tmp = list->data;
+	if (!builtins_handler(cmd_tmp, l_env, my_stdin, my_stdout)) {
+		command_handler(list->next->next, l_env, fd[0], 1);
+		return;
 	}
-	if (btree->right->is_separator) {
-		pos = pos_str_in_array((char **)EXEC, btree->right->value[0]);
-		EXEC_FUNC[pos](btree->right, l_env, fd[0], my_stdout);
+	cmd_tmp->value[0] = get_access(cmd_tmp->value[0], *l_env);
+	if (cmd_tmp->value[0] == NULL) {
+		command_handler(list->next->next, l_env, 0, 1);
+		return;
+	}
+	pipe(fd);
+	pid = fork();
+	if (pid == -1)
+		my_print_err("Error pipe fork");
+	else if (pid == 0) {
+		close(fd[0]);
+		dup2(my_stdin, 0);
+		dup2(fd[1], 1);
+		close(fd[1]);
+		my_exec(((cmd_t *)list->data)->value, *l_env);
 	} else {
-		nb_wait++;
-		pid_right = fork();
-		if (pid_right == -1)
-			my_print_err("Error pipe fork");
-		else if (pid_right == 0) {
-			close(fd[1]);
-			dup2(fd[0], 0);
-			close(fd[0]);
-			my_exec(btree->right->value, l_env);
-		} else {
-			wait(NULL);
-		}
+		close(fd[1]);
+		command_handler(list->next->next, l_env, fd[0], 1);
 	}
 }
