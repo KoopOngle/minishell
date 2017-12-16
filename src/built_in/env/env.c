@@ -11,10 +11,12 @@
 
 void env(list_t *l_env)
 {
-	char **env = to_str_array(l_env);
+	char **env = NULL;
 	int i = 0;
 
+	if (l_env == NULL)
+		return;
+	env  = to_str_array(l_env);
 	while (env[i]) 
 		my_printf("%s\n", env[i++]);
-	exit(1);
 }

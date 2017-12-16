@@ -27,8 +27,8 @@ char *cat_env_var(list_t *l_env, char *new_env);
 void change_directory(char *str);
 void my_exit();
 
-static const char *builtins[] = {"cd", "env", "setenv", "unsetenv", "exit", NULL};
-static const void (*built_func[])() = {&change_directory, &env, &set_env,
+static const char *BUILTINS[] = {"cd", "env", "setenv", "unsetenv", "exit", NULL};
+static const void (*BUILT_FUNC[])() = {&change_directory, &env, &set_env,
 				       &unset_env, &my_exit};
 
 #endif /* ENV_H_ */
