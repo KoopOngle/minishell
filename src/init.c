@@ -26,7 +26,7 @@ static void add_to_list(list_t **l_env, char *new_env)
 {
 	int pos_equal;
 	env_var_t *env_var = NULL;
-	
+
 	if (new_env == NULL)
 		return;
 	pos_equal = get_pos_first_equal(new_env);
@@ -42,9 +42,9 @@ list_t *init_sh(char **env)
 {
 	int i = 0;
 	list_t *l_env = NULL;
-	
+
 	if (env == NULL || env[0] == NULL)
-		return (NULL);	
+		return (NULL);
 	while (env[i]) {
 		add_to_list(&l_env, env[i]);
 		i++;

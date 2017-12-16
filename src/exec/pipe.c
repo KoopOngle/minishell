@@ -17,22 +17,12 @@
 #include "get_next_line.h"
 #include "parser.h"
 
-void pipe_handler(list_t *list, list_t **l_env, int my_stdin, int my_stdout)
+static void pipe_process(list_t *list, list_t **l_env, int my_stdin,
+			 int my_stdout)
 {
 	int pid;
 	int fd[2];
-	cmd_t *cmd_tmp = NULL;
 
-	cmd_tmp = list->data;
-	if (!builtins_handler(cmd_tmp, l_env, my_stdin, my_stdout)) {
-		command_handler(list->next->next, l_env, fd[0], 1);
-		return;
-	}
-	cmd_tmp->value[0] = get_access(cmd_tmp->value[0], *l_env);
-	if (cmd_tmp->value[0] == NULL) {
-		command_handler(list->next->next, l_env, 0, 1);
-		return;
-	}
 	pipe(fd);
 	pid = fork();
 	if (pid == -1)
@@ -47,4 +37,21 @@ void pipe_handler(list_t *list, list_t **l_env, int my_stdin, int my_stdout)
 		close(fd[1]);
 		command_handler(list->next->next, l_env, fd[0], 1);
 	}
+}
+
+void pipe_handler(list_t *list, list_t **l_env, int my_stdin, int my_stdout)
+{
+	cmd_t *cmd_tmp = NULL;
+
+	cmd_tmp = list->data;
+	if (!builtins_handler(cmd_tmp, l_env, my_stdin, my_stdout)) {
+		command_handler(list->next->next, l_env, 0, 1);
+		return;
+	}
+	cmd_tmp->value[0] = get_access(cmd_tmp->value[0], *l_env);
+	if (cmd_tmp->value[0] == NULL) {
+		command_handler(list->next->next, l_env, 0, 1);
+		return;
+	}
+	pipe_process(list, l_env, my_stdin, my_stdout);
 }
