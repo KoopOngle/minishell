@@ -15,19 +15,9 @@
 #include "exec.h"
 #include "error.h"
 
-void in_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout)
+void in_handler(list_t *list, list_t *l_env, int *my_stdin, int *my_stdout)
 {
-	int fd = read_file(btree->right->value[0]);
-	int pid;
+	int fd = read_file(((cmd_t *)list->data)->value[0]);
 
-	if (fd < 0)
-		my_print_err("error opening file");
-	pid = fork();
-	if (pid == -1)
-		my_print_err("error fork");
-	else if (pid == 0) {
-		dup2(fd, 0);
-		my_exec(btree->left->value, l_env);
-	}
-	wait(NULL);
+	*my_stdin = fd;
 }
