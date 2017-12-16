@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2017
+g** EPITECH PROJECT, 2017
 ** then.c
 ** File description:
 ** ; function
@@ -16,30 +16,38 @@
 #include "error.h"
 #include "parser.h"
 
-static void handle_cmd(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout)
+static void exec_process(list_t *list, list_t **l_env, int my_stdin,
+			 int my_stdout)
 {
 	int pid;
-	int fd[2];
-	int pos;
-	
-	if (btree->is_separator) {
-		pos = pos_str_in_array((char **)EXEC, btree->value[0]);
-		EXEC_FUNC[pos](btree, l_env, 0, 1);
+
+	pid = fork();
+	if (pid == -1)
+		my_print_err("error fork");
+	else if (pid == 0) {
+		dup2(my_stdin, 0);
+		dup2(my_stdout, 1);
+		my_exec(((cmd_t *)list->data)->value, *l_env);
 	} else {
-		pipe(fd);
-		pid = fork();
-		if (pid == -1)
-			my_print_err("Error fork");
-		else if (pid == 0) {
-			dup2(fd[0], my_stdin);
-			my_exec(btree->value, l_env);
-		} else
-			wait(NULL);
+		waitpid(pid, NULL, 0);
+		command_handler(list->next->next, l_env, 0, 1);
 	}
 }
 
-void then_handler(btree_t *btree, list_t *l_env, int my_stdin, int my_stdout)
+void then_handler(list_t *list, list_t **l_env, int my_stdin, int my_stdout)
 {
-	handle_cmd(btree->left, l_env, my_stdin, my_stdout);
-	handle_cmd(btree->right, l_env, my_stdin, my_stdout);
+	int pid;
+	cmd_t *cmd_tmp = NULL;
+
+	cmd_tmp = list->data;
+	if (!builtins_handler(cmd_tmp, l_env, my_stdin, my_stdout)) {
+		command_handler(list->next->next, l_env, 0, 1);
+		return;
+	}
+	cmd_tmp->value[0] = get_access(cmd_tmp->value[0], *l_env);
+	if (cmd_tmp->value[0] == NULL) {
+		command_handler(list->next->next, l_env, 0, 1);
+		return;
+	}
+	exec_process(list, l_env, my_stdin, my_stdout);
 }
