@@ -20,7 +20,7 @@ int read_file(char *file_name)
 {
 	int fd;
 	char *err = NULL;
-	
+
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1) {
 		my_sprintf(&err, "Error: %s", file_name);
