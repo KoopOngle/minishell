@@ -60,19 +60,24 @@ static char *parse_spaces(char *command)
 	int i = 0;
 	int end;
 	int begin = i;
-	
+
 	while (command[i])
 		if (is_separator(command[i]))
 			handle_separator(&res, command, &i);
 		else
 			handle_normal(&res, command, &i);
+	i = 0;
+	while (res[i])
+		i++;
+	if (res[i - 1] == ' ')
+		res[i - 1] = 0;
 	return (res);
 }
 
 char **command_parser(char *command)
 {
 	char **res = NULL;
-	
+
 	if (command == NULL)
 		return (NULL);
 	command = parse_spaces(command);
