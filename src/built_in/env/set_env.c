@@ -24,8 +24,9 @@ static void add_to_env(list_t **l_env, char *name, char *value)
 	if (name == NULL)
 		return;
 	env = my_calloc(sizeof(env_var_t));
-	env->name = name;
-	env->value = cat_env_var(*l_env, value);
+	env->name = my_dup(name);
+	env->value = (value == NULL) ? my_dup("") :
+		cat_env_var(*l_env, value);
 	put_in_list(l_env, env);
 }
 
