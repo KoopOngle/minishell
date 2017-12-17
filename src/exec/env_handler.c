@@ -21,7 +21,7 @@ static void exec_builtin(int pos, cmd_t *cmd, list_t **l_env)
 	switch (pos) {
 	case 0:
 		if (cmd->value[1])
-			change_directory(cmd->value[1]);
+			change_directory(*l_env, cmd->value[1]);
 		break;
 	case 1:
 		env(*l_env);

@@ -24,7 +24,7 @@ char *get_env_value(list_t *l_env, char *name);
 void set_env(list_t *l_env, char *name, char *value);
 void unset_env(list_t **l_env, char *name);
 char *cat_env_var(list_t *l_env, char *new_env);
-void change_directory(char *str);
+void change_directory(list_t *l_env, char *str);
 void my_exit();
 
 static const char *BUILTINS[] = {"cd", "env", "setenv", "unsetenv", "exit", NULL};
