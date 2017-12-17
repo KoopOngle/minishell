@@ -79,7 +79,6 @@ void core_sh(list_t *l_env)
 	list_t *l_cmd = NULL;
 
 	while (1) {
-		my_printf("$>");
 		command = get_next_line(0, '\n');
 		if (command == 0)
 			break;

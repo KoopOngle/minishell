@@ -45,6 +45,8 @@ char *cat_env_var(list_t *l_env, char *new_env)
 	char *res = NULL;
 	char *tmp = NULL;
 
+	if (!new_env)
+		return (NULL);
 	while (new_env[i]) {
 		if (new_env[i] == '$') {
 			tmp = get_variable(l_env, new_env, &i);
