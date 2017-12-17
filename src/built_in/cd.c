@@ -19,7 +19,7 @@ void change_directory(char *str)
 	if (str == NULL)
 		return;
 	if (chdir(str) == -1) {
-		my_sprintf(&str_err, "cd : %s", str);
+		my_sprintf(&str_err, "%s", str);
 		my_print_err(str_err);
 		free(str_err);
 	}
