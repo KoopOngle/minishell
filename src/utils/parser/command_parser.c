@@ -14,6 +14,7 @@ static int is_separator(char c)
 {
 	switch (c) {
 	case ' ':
+	case '\t':
 	case '|':
 	case '>':
 	case '<':
@@ -26,15 +27,15 @@ static int is_separator(char c)
 
 static void handle_separator(char **res, char *cmd, int *i)
 {
-	if (cmd[*i] == ' ') {
-		if (*i > 0 && cmd[(*i) - 1] != ' ')
+	if (cmd[*i] == ' ' || cmd[*i] == '\t') {
+		if (*i > 0 && cmd[(*i) - 1] != ' ' && cmd[(*i) - 1] != '\t')
 			cat_char(res, ' ');
 	} else if (cmd[*i] == '|' || cmd[*i] == ';') {
-		if (*i > 0 && cmd[(*i) - 1] != ' ')
+		if (*i > 0 && cmd[(*i) - 1] != ' ' && cmd[(*i) - 1] != '\t')
 			cat_char(res, ' ');
 		cat_char(res, cmd[*i]);
 	} else {
-		if (*i > 0 && cmd[(*i) - 1] != ' ')
+		if (*i > 0 && cmd[(*i) - 1] != ' ' && cmd[(*i) - 1] != '\t')
 			cat_char(res, ' ');
 		cat_char(res, cmd[*i]);
 		if (cmd[(*i) + 1] == cmd[(*i)])
