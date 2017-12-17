@@ -12,7 +12,7 @@
 #include "memory.h"
 
 static void replace_env(list_t *l_env, env_var_t *env, char *new_value)
-{	
+{
 	new_value = cat_env_var(l_env, new_value);
 	env->value = new_value;
 }
@@ -35,7 +35,7 @@ void set_env(list_t *l_env, char *name, char *value)
 	list_t *tmp_l = l_env;
 	env_var_t *tmp_env = NULL;
 	int stop = 0;
-	
+
 	if (name == NULL) {
 		env(l_env);
 		return;

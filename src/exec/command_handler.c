@@ -19,7 +19,7 @@ static void child_process(char **values, list_t *l_env, int my_stdin,
 			  int my_stdout)
 {
 	int pid;
-	
+
 	pid = fork();
 	if (pid == -1)
 		my_print_err("Error fork");

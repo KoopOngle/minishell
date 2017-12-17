@@ -13,7 +13,6 @@
 #include "parser.h"
 #include "env.h"
 #include "exec.h"
-#include "btree.h"
 #include "string.h"
 
 static int is_redirection(cmd_t *cmd)

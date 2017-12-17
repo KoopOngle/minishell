@@ -19,7 +19,7 @@ char **to_str_array(list_t *l_env)
 	list_t *tmp_list = l_env;
 	char *tmp_str = NULL;
 	int i = 0;
-		
+
 	if (l_env == NULL)
 		return (NULL);
 	size = list_size(l_env);

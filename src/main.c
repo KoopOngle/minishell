@@ -14,9 +14,8 @@
 int main(int argc, char **argv, char **env)
 {
 	list_t *l_env = NULL;
-	
+
 	l_env = init_sh(env);
 	core_sh(l_env);
-
 	return (0);
-}     
+}

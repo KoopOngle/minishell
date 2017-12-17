@@ -9,17 +9,16 @@
 #include "exec.h"
 #include "string.h"
 
-
 static int get_prio(char *str)
 {
-        if (compare(str, ";") == 0)
-                return (2);
+	if (compare(str, ";") == 0)
+		return (2);
 	else if (compare(str, "|") == 0 || compare(str, "<<") == 0 ||
-                 compare(str, ">") == 0 || compare(str, ">>") == 0 ||
-                 compare(str, "<") == 0)
-                return (1);
-        else
-                return (0);
+		 compare(str, ">") == 0 || compare(str, ">>") == 0 ||
+		 compare(str, "<") == 0)
+		return (1);
+	else
+		return (0);
 }
 
 cmd_t *create_cmd(char **value)

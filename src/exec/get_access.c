@@ -24,7 +24,6 @@ static char *handle_realpath(char *cmd)
 	rval = access(cmd, F_OK);
 	if (rval == -1) {
 		my_dprintf(2, "%s: command not found\n", cmd);
-//		my_print_err(cmd);
 		return (NULL);
 	}
 	rval = access(cmd, X_OK);
@@ -61,7 +60,7 @@ static char *parse_d_name(char *d_name, char *path_dir)
 static char *get_in_dir(char *path, char *cmd)
 {
 	DIR *dirpath = opendir(path);
-	struct dirent *dp = NULL;                                                                                                                                                            
+	struct dirent *dp = NULL;
 
 	if (dirpath == NULL)
 		return (NULL);
@@ -69,7 +68,7 @@ static char *get_in_dir(char *path, char *cmd)
 	while (dp) {
 		if (compare(dp->d_name, cmd) == 0)
 			return (parse_d_name(cmd, path));
-	        dp = readdir(dirpath);
+		dp = readdir(dirpath);
 	}
 	return (NULL);
 }

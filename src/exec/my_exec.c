@@ -13,7 +13,7 @@
 void my_exec(char **argv, list_t *l_env)
 {
 	char **env = to_str_array(l_env);
-	
+
 	if (!argv || !argv[0])
 		exit(84);
 	execve(argv[0], argv, env);

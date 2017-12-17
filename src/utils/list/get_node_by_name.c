@@ -12,8 +12,8 @@
 
 list_t *get_node_by_name(list_t **begin, char *name)
 {
-        list_t *ptrPre = *begin;
-        list_t *tmp = ptrPre;
+	list_t *ptrPre = *begin;
+	list_t *tmp = ptrPre;
 	env_var_t *env_var;
 
 	while (tmp != NULL) {
@@ -22,5 +22,5 @@ list_t *get_node_by_name(list_t **begin, char *name)
 			return (tmp);
 		tmp = tmp->next;
 	}
-        return (NULL);
+	return (NULL);
 }

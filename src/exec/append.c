@@ -9,7 +9,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "btree.h"
 #include "my_printf.h"
 #include "list.h"
 #include "exec.h"

@@ -33,7 +33,7 @@ char **env_var_to_word_array(char *env_var, char separator)
 	while (y < (nb + 1)) {
 		word_a[y++] = my_dup("");
 	}
-	y = 0;	
+	y = 0;
 	while (env_var && env_var[i] != '\0') {
 		if (env_var[i] == separator) {
 			y++;
